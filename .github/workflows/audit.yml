@@ -1,0 +1,18 @@
+name: Skill Audit
+
+# Automatic guard: runs the scanner on every push + PR.
+# Green tick = SAFE. Red cross = BLOCK. Nothing to install.
+on:
+  push:
+  pull_request:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run skill-audit (read-only, stdlib only)
+        run: python scripts/audit.py .

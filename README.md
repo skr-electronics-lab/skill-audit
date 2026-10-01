@@ -1,5 +1,7 @@
 # Skill-Audit — Static Safety Scanner for AI Agent Skills
 
+![Skill Audit](https://github.com/skr-electronics-lab/skill-audit/actions/workflows/audit.yml/badge.svg)
+
 > Scan any Claude / Opencode / Cursor agent skill **before** you install it. Detect prompt injection, `curl-pipe-sh` malware, credential theft, obfuscation, and risky supply-chain pulls — in seconds, without executing anything.
 
 If you found this after watching videos about malicious AI skills installing viruses via prompt injection, you are in the right place. This is the pre-install seatbelt for the agent-skill ecosystem.
