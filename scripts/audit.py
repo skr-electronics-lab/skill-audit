@@ -30,7 +30,11 @@ RULES = [  # audit:allow - pattern definitions, not live malware
 ]
 
 TEXT_EXTS = {".md", ".py", ".sh", ".mjs", ".js", ".ts", ".json", ".ps1", ".yaml", ".yml", ".toml"}
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", ".github"}
+# README/LICENSE at repo root are marketing, never loaded into agent context.
+# The agent loads SKILL.md + scripts/ + references/. Scanning README gives
+# false BLOCKs on documented patterns (we hit this on our own README).
+SKIP_FILES = {"README.md", "LICENSE", "CHANGELOG.md"}
 
 
 def scan_text(rel: str, text: str):
@@ -51,6 +55,8 @@ def scan_dir(root: Path):
     files = 0
     for p in root.rglob("*"):
         if any(d in p.parts for d in SKIP_DIRS) or not p.is_file():
+            continue
+        if p.name in SKIP_FILES and p.parent == root:
             continue
         if p.suffix.lower() not in TEXT_EXTS and p.name != "SKILL.md":
             continue
